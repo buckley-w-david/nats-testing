@@ -1,5 +1,6 @@
 resources:
   - default-svc.yaml
-# patches - partial resources that modify full resources defined in a base (only meaningful in an overlay).
-bases:
-  - nats
+  - nats/nats-namespace.yaml
+  - nats/nats-cluster.yaml
+  - nats/nats-server.yaml
+  - nats/nats-streaming.yaml
