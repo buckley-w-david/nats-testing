@@ -29,7 +29,7 @@ jobs:
             make build
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
       - persist_to_workspace:
-          root: workspace
+          root: bin
           # Must be relative path from root
           paths:
             - example

@@ -3,7 +3,7 @@ export TAG
 
 build:
 	go get -d 
-	go build -ldflags "-X main.version=$(TAG)" -o example .
+	go build -ldflags "-X main.version=$(TAG)" -o bin/example .
 
 pack: build
 	docker build -t buckleywdavid/producer-consumer:$(TAG) 
