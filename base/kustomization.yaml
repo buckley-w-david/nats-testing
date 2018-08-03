@@ -1,0 +1,5 @@
+resources:
+  - default-svc.yaml
+# patches - partial resources that modify full resources defined in a base (only meaningful in an overlay).
+bases:
+  - nats

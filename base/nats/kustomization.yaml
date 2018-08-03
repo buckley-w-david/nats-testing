@@ -1,0 +1,5 @@
+resources:
+  - nats-namespace.yaml
+  - nats-cluster.yaml
+  - nats-server.yaml
+  - nats-streaming.yaml
