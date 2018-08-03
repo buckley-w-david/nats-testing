@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: example-nats
+spec:
+  type: ExternalName
+  externalName: example-nats.nats-io.svc.cluster.local
+  ports:
+  - port: 4222
+    targetPort: 4222
