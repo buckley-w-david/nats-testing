@@ -7,14 +7,39 @@ jobs:
       - checkout:
           path: ~/repo
       - setup_remote_docker
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           command: |
+              cp /tmp/workspace/example .
               docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-              make upload
+              docker build -t buckleywdavid/producer-consumer:$(CIRCLE_SHA1)
+              docker push buckleywdavid/producer-consumer:$(CIRCLE_SHA1)
+              docker push buckleywdavid/producer-consumer:latest
           name: "Build and Deploy Docker Image"
+    working_directory: ~/repo/app
+  build:
+    docker:
+      - image: golang
+    steps:
+      - checkout:
+          path: ~/repo
+      - run:
+          command: |
+            make build
+      # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
+      - persist_to_workspace:
+          root: workspace
+          # Must be relative path from root
+          paths:
+            - example
     working_directory: ~/repo/app
 workflows:
   version: 2
   nats:
     jobs:
-      - deploy
+      - build
+      - deploy:
+          requires:
+            - build
+
