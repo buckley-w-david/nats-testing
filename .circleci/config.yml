@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: docker:17.12.1-ce-git
+    steps:
+      - checkout:
+          path: ~/repo
+      - setup_remote_docker
+      - run:
+          command: |
+              docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+              make upload
+          name: "Build and Deploy Docker Image"
+    working_directory: ~/repo/app
+workflows:
+  version: 2
+  nats:
+    jobs:
+      - deploy:
