@@ -12,10 +12,10 @@ jobs:
       - run:
           command: |
               cp /tmp/workspace/example .
-              docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-              docker build -t buckleywdavid/producer-consumer:$(CIRCLE_SHA1)
-              docker push buckleywdavid/producer-consumer:$(CIRCLE_SHA1)
-              docker push buckleywdavid/producer-consumer:latest
+              echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
+              docker build -t "buckleywdavid/producer-consumer:$CIRCLE_SHA1" -t "buckleywdavid/producer-consumer:latest" .
+              docker push "buckleywdavid/producer-consumer:$CIRCLE_SHA1"
+              docker push "buckleywdavid/producer-consumer:latest"
           name: "Build and Deploy Docker Image"
     working_directory: ~/repo/app
   build:
